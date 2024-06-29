@@ -1,5 +1,6 @@
 import { Card } from '@/components/card';
 import { CityInfo } from '@/components/cityInfo';
+import { WeatherDetails } from '@/components/weather/weatherDetails';
 import { getWeatherCurrentLocationAsync } from '@/domain/store/modules/weather';
 import { AppDispatch } from '@/domain/store/store.types';
 import { useEffect } from 'react';
@@ -18,7 +19,7 @@ function Root() {
         <CityInfo />
       </Card>
       <Card>
-        <div>Weather data</div>
+        <WeatherDetails />
       </Card>
       <Card>
         <div>Weather data</div>
