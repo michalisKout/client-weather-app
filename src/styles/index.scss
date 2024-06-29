@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './pages/root.scss';
+@import './common.scss';
+
+body {
+  @apply bg-slate-900 text-stone-300 flex flex-col items-center p-4 space-y-4;
+}
+
+html {
+  @apply font-roboto;
+}
+
+p {
+  @apply p-0 m-0;
+}

@@ -1,10 +1,10 @@
-import './styles.scss';
+import './styles/index.scss';
 import { createRoot } from 'react-dom/client';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { StrictMode } from 'react';
-import App from '@/App';
 import Page404 from '@/pages/Page404';
 import { StoreProvider } from '@/domain/store/provider';
+import Root from '@/pages/Root';
 
 const container = document.getElementById('root')!;
 
@@ -16,7 +16,7 @@ root.render(
       <Router>
         <Switch>
           <Route path={'/'} exact>
-            <App />
+            <Root />
           </Route>
           <Route path="*">
             <Page404 />

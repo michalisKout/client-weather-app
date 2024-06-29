@@ -1,9 +1,9 @@
-import App from '@/App';
+import Root from '@/pages/Root';
 import { render } from '@testing-library/react';
 
-describe('App', () => {
+describe('Root', () => {
   it('should match snapshot', () => {
-    const { baseElement } = render(<App />);
+    const { baseElement } = render(<Root />);
     expect(true).toBe(true);
 
     expect(baseElement).toMatchSnapshot();

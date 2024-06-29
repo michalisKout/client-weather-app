@@ -1,10 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 
 export default {
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  content: ['./src/**/*.{js,jsx,ts,tsx,scss}'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        roboto: ['Roboto', 'sans'],
+      },
+    },
   },
-  // eslint-disable-next-line no-undef
-  plugins: [require('@tailwindcss/typography')],
 };
