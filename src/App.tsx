@@ -1,7 +1,7 @@
 function App() {
   return (
     <>
-      <h1>Weather app</h1>
+      <h1 className="text-red-700 text-lg">Weather app</h1>
     </>
   );
 }
