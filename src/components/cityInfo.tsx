@@ -1,4 +1,8 @@
-import { selectLocation, selectWeatherDataLoading } from '@/domain/store/modules/weather';
+import {
+  selectLocation,
+  selectWeatherDataError,
+  selectWeatherDataLoading,
+} from '@/domain/store/modules/weather';
 import { useAppSelector } from '@/domain/store/store.types';
 
 const dateOptions: Intl.DateTimeFormatOptions = {
@@ -10,8 +14,11 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 export const CityInfo = () => {
   const locationData = useAppSelector(selectLocation);
   const isLoading = useAppSelector(selectWeatherDataLoading);
+  const error = useAppSelector(selectWeatherDataError);
 
-  if (isLoading) return <p>loading location details...</p>;
+  if (error) return <p>Missing city details...</p>;
+
+  if (isLoading) return <p>Loading city details...</p>;
 
   const time = locationData?.localtime && new Date(locationData?.localtime).toLocaleTimeString();
 

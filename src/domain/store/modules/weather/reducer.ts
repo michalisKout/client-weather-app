@@ -1,3 +1,4 @@
+import { resetWeatherData, resetWeatherDataError } from '@/domain/store/modules/weather/actions';
 import { getWeatherCurrentLocationAsync } from '@/domain/store/modules/weather/thunks';
 import { WeatherState } from '@/domain/store/modules/weather/types';
 import { createReducer } from '@reduxjs/toolkit';
@@ -20,7 +21,13 @@ export const weatherReducer = createReducer(INITIAL_STATE, (builder) => {
     .addCase(getWeatherCurrentLocationAsync.rejected, (state, action) => {
       state.data = undefined;
       state.loading = false;
-      state.error = action.error.message;
+      if (action.payload) state.error = action.payload as string;
+    })
+    .addCase(resetWeatherDataError, (state) => {
+      state.error = undefined;
+    })
+    .addCase(resetWeatherData, (state) => {
+      state.data = undefined;
     })
     .addDefaultCase((state) => state);
 });

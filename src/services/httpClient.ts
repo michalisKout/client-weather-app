@@ -16,3 +16,5 @@ const axiosInstance = axios.create({
 });
 
 export default axiosInstance;
+
+export type ApiErrorResponse = { error: { code: number; message: string } };
