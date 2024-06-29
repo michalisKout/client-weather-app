@@ -3,6 +3,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MockStoreProvider } from '@/test.utils';
 import weather from '@/__MOCKS__/weather';
 import { getWeatherCurrentLocation } from '@/services/weatherApi';
+import { RootState } from '@/domain/store/store.types';
 
 vi.mock('@/services/weatherApi', () => ({
   getWeatherCurrentLocation: vi.fn(),
@@ -10,8 +11,8 @@ vi.mock('@/services/weatherApi', () => ({
 
 const mockGetWeatherCurrentLocation = vi.mocked(getWeatherCurrentLocation);
 
-const initState = {
-  user: { cityValue: 'Athens', searchHistory: [] },
+const initState: RootState = {
+  user: { cityValue: 'Athens', searchHistory: [], favoriteCities: [] },
   weather: { loading: false },
 };
 

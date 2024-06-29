@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from 'react';
 
 export const SearchCityInput = () => {
   const [input, setInput] = useState('');
-  const [isFocused, setIsFocused] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectWeatherDataError);
   const searchHistory = useAppSelector(selectSearchHistory);
@@ -22,12 +22,14 @@ export const SearchCityInput = () => {
     if (savedSearchHistory) {
       const history = JSON.parse(savedSearchHistory) as Array<string>;
       dispatch(hydrateCitiesSearchHistory(history));
-      inputRef.current?.focus();
+      setInput(history[0]);
+      dispatch(updateCityValue(history[0]));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('citiesSearchHistory', JSON.stringify(searchHistory));
+    if (searchHistory.length)
+      localStorage.setItem('citiesSearchHistory', JSON.stringify(searchHistory));
   }, [searchHistory]);
 
   return (
@@ -51,7 +53,7 @@ export const SearchCityInput = () => {
           className={`search-city-input search-city-input--${error ? 'error' : 'default'}`}
         />
         {isFocused && searchHistory.length > 0 ? (
-          <div className="w-full max-w-96 absolute top-11 shadow-2xl shadow-slate-950">
+          <div className="z-50 w-full max-w-96 absolute top-11 shadow-2xl shadow-slate-950">
             <ul className="search-history--list">
               <div className="flex justify-between p-2">
                 <p className="italic">Recent cities search history</p>
@@ -59,7 +61,10 @@ export const SearchCityInput = () => {
                   className="italic hover:underline text-red-800"
                   onClick={() => {
                     const yes = confirm('Are you sure you want to clear your search history?');
-                    if (yes) dispatch(hydrateCitiesSearchHistory([]));
+                    if (yes) {
+                      dispatch(hydrateCitiesSearchHistory([]));
+                      localStorage.setItem('citiesSearchHistory', [].toString());
+                    }
                   }}
                 >
                   Clear history

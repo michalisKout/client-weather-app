@@ -1,5 +1,6 @@
 import { Card } from '@/components/card';
 import { CityInfo } from '@/components/cityInfo';
+import { FavoriteCities } from '@/components/favoriteCities';
 import { SearchCityInput } from '@/components/searchCityInput';
 import { WeatherDetails } from '@/components/weather/weatherDetails';
 import { selectCityInput } from '@/domain/store/modules/user';
@@ -20,19 +21,27 @@ function Root() {
     <div className="flex flex-col gap-4 items-center">
       <SearchCityInput />
 
-      {city && (
-        <div className="grid w-full max-w-4xl grid-cols-1 gap-4 md:grid-cols-2">
-          <Card>
-            <CityInfo />
-          </Card>
-          <Card>
-            <WeatherDetails />
-          </Card>
-          <Card>
-            <div>Weather data</div>
-          </Card>
+      <div className="flex w-full justify-center" style={{ maxWidth: 800 }}>
+        <div className="grid md:grid-cols-2 grid-rows-3 gap-4">
+          <div className="grid grid-rows-2 gap-4">
+            <Card>
+              <FavoriteCities />
+            </Card>
+            {city && (
+              <Card>
+                <CityInfo />
+              </Card>
+            )}
+          </div>
+          <div className="flex w-full">
+            {city && (
+              <Card>
+                <WeatherDetails />
+              </Card>
+            )}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
