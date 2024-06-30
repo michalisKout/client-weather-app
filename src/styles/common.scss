@@ -1,16 +1,16 @@
 .card {
-	@apply min-h-96 min-w-96 p-4 text-center justify-center flex flex-col gap-2 border border-slate-950 rounded-2xl shadow-2xl shadow-slate-950 relative w-full;
+	@apply min-h-96 min-w-96 p-4 text-center justify-center flex flex-col gap-2 border border-slate-950 rounded-2xl shadow-2xl shadow-slate-950 relative w-full h-full;
 }
 
 .weather {
 	&__condition {
-		@apply shadow-2xl shadow-black w-24 h-24 mx-auto my-2 pt-2 rounded-full;
+		@apply flex items-center justify-center shadow-2xl shadow-black w-24 h-24 mx-auto my-2 rounded-full;
 
-		&__day {
+		&--day {
 			@apply bg-gray-200
 		}
 
-		&__night {
+		&--night {
 			@apply bg-gray-700;
 		}
 	}
@@ -32,6 +32,9 @@
 .search-city-input {
 	@apply w-full max-w-96 p-2 border text-stone-300 bg-slate-900 rounded-md;
 
+	&__form-container {
+		@apply flex flex-nowrap justify-between gap-2;
+	}
 	&__default {
 		@apply outline-stone-300 border-stone-300;
 	}
@@ -40,9 +43,18 @@
 		@apply outline-red-600 border-red-600 focus-visible:outline-red-600 focus-visible:border-red-600;
 
 	}
+
+	&__submit {
+		@apply border border-stone-300 md:hover:bg-stone-300 md:hover:text-slate-800 md:focus-visible:bg-stone-400 text-stone-300 bg-slate-800 p-1 rounded-md   active:scale-95 transition-all;
+	}
 }
 
 .search-history {
+	
+	&__container {
+		@apply z-50 w-full max-w-96 absolute top-12 shadow-2xl shadow-slate-950;
+	}
+
 	&__list { 
 		@apply rounded-lg bg-stone-300 text-slate-800 w-full max-h-64 overflow-auto;
 	}
@@ -62,12 +74,16 @@
 	}
 
 	&__item {
-		@apply flex flex-nowrap justify-between gap-2 items-center w-full hover:bg-slate-700 transition-colors hover:rounded-md hover:cursor-pointer;
+		@apply flex flex-nowrap justify-between gap-2 items-center w-full hover:bg-slate-700 transition-colors rounded-md hover:rounded-md hover:cursor-pointer;
 	}
 
 	& .remove-favorite-city {
 		@apply font-bold hover:underline whitespace-nowrap text-ellipsis overflow-hidden text-sm;
 	}
+}
+
+.favorite-city-button {
+	@apply absolute top-5 right-5 hover:scale-105 active:scale-95 transition-all;
 }
 
 .flex-col-centered { 

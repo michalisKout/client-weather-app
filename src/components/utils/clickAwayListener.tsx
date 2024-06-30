@@ -25,7 +25,7 @@ export const ClickAwayListener = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [onClickAway]);
+  }, []);
 
   return (
     <div style={{ width: styleOptions?.width || 'auto' }} ref={ref}>

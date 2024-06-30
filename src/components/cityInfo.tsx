@@ -1,3 +1,4 @@
+import { FallbackContent } from '@/components/fallbackContent';
 import { CityInfoLoading } from '@/components/skeletons/skeletons';
 import {
   addCityToFavoritesList,
@@ -28,9 +29,17 @@ export const CityInfo = () => {
   const savedCities = useAppSelector(selectFavoriteCities);
   const dispatch = useAppDispatch();
 
-  if (error) return <p>Missing city details...</p>;
+  if (error) return <p>Cannot display data due to an error.</p>;
 
   if (isLoading) return <CityInfoLoading />;
+
+  if (!locationData)
+    return (
+      <FallbackContent
+        text="The location details will be shown here."
+        imgSrc="./city_location.svg"
+      />
+    );
 
   const time = locationData?.localtime && new Date(locationData?.localtime).toLocaleTimeString();
 
@@ -44,7 +53,7 @@ export const CityInfo = () => {
     <>
       <button
         data-testid="favorite-city-button"
-        className="absolute top-5 right-5"
+        className="favorite-city-button"
         onClick={() => {
           if (!favoriteCity) {
             alert('Please select a valid city!');

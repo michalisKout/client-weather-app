@@ -26,22 +26,26 @@ function Root() {
 
       <div className="flex w-full justify-center" style={{ maxWidth: 800 }}>
         <div className="grid md:grid-cols-2 gap-4">
-          <div className="grid grid-rows-2 gap-4">
+          <div className="flex-col-centered gap-4">
             <Card>
-              <FavoriteCities />
+              <CityInfo />
             </Card>
-            {city && (
+            <div className="hidden md:block">
               <Card>
-                <CityInfo />
+                <FavoriteCities />
               </Card>
-            )}
+            </div>
           </div>
-          <div className="flex w-full">
-            {city && (
+          <div className="flex-col-centered w-full h-full">
+            <Card>
+              <WeatherDetails />
+            </Card>
+
+            <div className="md:hidden block">
               <Card>
-                <WeatherDetails />
+                <FavoriteCities />
               </Card>
-            )}
+            </div>
           </div>
         </div>
       </div>

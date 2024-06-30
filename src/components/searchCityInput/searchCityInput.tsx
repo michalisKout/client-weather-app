@@ -19,7 +19,7 @@ export const SearchCityInput = () => {
     inputRef,
     setIsInputFocused,
     handleChange,
-    handleKeyDown,
+    handleFormSubmit,
     dispatch,
   } = useSearchCityInput();
   const error = useAppSelector(selectWeatherDataError);
@@ -41,23 +41,32 @@ export const SearchCityInput = () => {
     <div className="flex flex-col gap-2 w-full items-center relative">
       <ClickAwayListener
         styleOptions={{ width: '24rem' }}
-        onClickAway={() => setIsInputFocused(false)}
+        onClickAway={() => {
+          setIsInputFocused(false);
+        }}
       >
-        <input
-          data-testid="search-city-input"
-          ref={inputRef}
-          value={input}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          onFocus={() => setIsInputFocused(true)}
-          placeholder="Search for your preferred city..."
-          className={`search-city-input search-city-input__${error ? 'error' : 'default'}`}
-        />
+        <form onSubmit={handleFormSubmit} className="search-city-input__form-container ">
+          <input
+            type="text"
+            data-testid="search-city-input"
+            ref={inputRef}
+            value={input}
+            onChange={handleChange}
+            onFocus={() => setIsInputFocused(true)}
+            placeholder="Search for your preferred city..."
+            className={`search-city-input search-city-input__${error ? 'error' : 'default'}`}
+          />
+          <button className="search-city-input__submit" type="submit">
+            Search
+          </button>
+        </form>
+
         {isInputFocused && searchHistory.length > 0 && (
           <SearchCityHistoryList
             searchHistory={searchHistory}
             onHistoryItemClick={(city) => {
               setInput(city);
+              setIsInputFocused(false);
               dispatch(updateCityValue(city));
             }}
           />

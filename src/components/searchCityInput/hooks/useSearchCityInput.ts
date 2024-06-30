@@ -5,7 +5,7 @@ import {
   addCityToHistory,
 } from '@/domain/store/modules/user';
 import { useAppDispatch, useAppSelector } from '@/domain/store/store.types';
-import { useRef, useState, useCallback, ChangeEvent } from 'react';
+import { useRef, useState, useCallback, ChangeEvent, FormEvent } from 'react';
 
 export const useSearchCityInput = () => {
   const dispatch = useAppDispatch();
@@ -20,8 +20,10 @@ export const useSearchCityInput = () => {
     setInput(e.target.value);
   }, []);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const isValid = e.key === 'Enter' && !!input.trim();
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const isValid = !!input.trim();
     if (!isValid) return;
 
     if (input !== existingCitySearchInput) dispatch(updateCityValue(input));
@@ -33,7 +35,7 @@ export const useSearchCityInput = () => {
 
   return {
     handleChange,
-    handleKeyDown,
+    handleFormSubmit,
     isInputFocused,
     setIsInputFocused,
     setInput,

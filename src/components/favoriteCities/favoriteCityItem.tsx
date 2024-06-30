@@ -33,7 +33,7 @@ export const FavoriteCityItem: FC<Props> = ({ handleCityRemoval, city, index }) 
       className={`favorite-cities__item ${selectedStyle}`}
     >
       <img src={img} alt={name} />
-      <p>{name}</p>
+      <p className="truncate">{name}</p>
       <strong>{temp}°C</strong>
       {handleCityRemoval && (
         <button

@@ -1,3 +1,4 @@
+import { FallbackContent } from '@/components/fallbackContent';
 import { WeatherDetailsLoading } from '@/components/skeletons/skeletons';
 import { WeatherSpec } from '@/components/weather/weatherSpec';
 import { selectDetails, selectWeatherDataLoading } from '@/domain/store/modules/weather';
@@ -14,7 +15,11 @@ export const WeatherDetails: FC<Props> = () => {
   const isLoading = useAppSelector(selectWeatherDataLoading);
 
   if (isLoading) return <WeatherDetailsLoading />;
-  if (!details) return <p>Missing weather details</p>;
+
+  if (!details)
+    return (
+      <FallbackContent text="The weather details will be shown here." imgSrc="./weather_data.svg" />
+    );
 
   const weatherConditionBgClass = details?.is_day ? 'day' : 'night';
 
@@ -23,11 +28,14 @@ export const WeatherDetails: FC<Props> = () => {
       <div className="flex-col-centered">
         <h2 className="text-6xl font-bold">{details.temp_c} °C</h2>
         <p className="text-md">Feels like {details.feelslike_c} °C</p>
-        <img
-          alt="weather condition"
-          src={details.condition.icon}
-          className={`weather__condition weather__condition__${weatherConditionBgClass}`}
-        />
+        <div className={`weather__condition weather__condition--${weatherConditionBgClass}`}>
+          <img
+            className="w-24 h-24"
+            alt={`weather condition ${details.condition.text}`}
+            src={details.condition.icon}
+          />
+        </div>
+
         <p className="text-2xl">{details.condition.text}</p>
       </div>
       <div className="weather__specs-container">
