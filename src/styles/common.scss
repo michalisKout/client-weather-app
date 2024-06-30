@@ -44,8 +44,9 @@
 
 .search-history {
 	&--list { 
-		@apply rounded-lg bg-stone-300 text-slate-800 w-full;
+		@apply rounded-lg bg-stone-300 text-slate-800 w-full max-h-64 overflow-auto;
 	}
+
 	&--item { 
 		@apply p-2 rounded-lg;
 		&:hover {

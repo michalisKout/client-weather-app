@@ -15,7 +15,6 @@ export const ClickAwayListener = ({
 
   useEffect(() => {
     const handleClickOutside = (event: globalThis.MouseEvent) => {
-      console.log(event.target);
       if (ref.current && !ref.current.contains(event.target as Node)) {
         onClickAway();
       }

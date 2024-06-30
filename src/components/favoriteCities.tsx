@@ -12,11 +12,6 @@ import { useEffect } from 'react';
 export const FavoriteCities = () => {
   const cities = useAppSelector(selectFavoriteCities);
   const dispatch = useAppDispatch();
-  const savedCities = useAppSelector(selectFavoriteCities);
-
-  useEffect(() => {
-    if (savedCities.length) localStorage.setItem('favoriteCities', JSON.stringify(savedCities));
-  }, [savedCities]);
 
   useEffect(() => {
     const favoriteCities = localStorage.getItem('favoriteCities');
@@ -35,17 +30,17 @@ export const FavoriteCities = () => {
   return (
     <>
       <h2>Favorite cities</h2>
-      <ul>
+      <ul className="max-h-64 overflow-auto px-6">
         {cities?.map(({ name, temp, img, searchIndex }, index) => (
           <li key={name + index} className="flex flex-nowrap justify-between gap-2 items-center">
             <img src={img} alt={name} />
             <button
-              className="text-md font-bold hover:underline"
+              className="text-md font-bold hover:underline whitespace-nowrap text-ellipsis overflow-hidden"
               onClick={() => {
                 if (searchIndex) dispatch(updateCityValue(searchIndex));
               }}
             >
-              {name}
+              <span>{name}</span>
             </button>
             <strong>{temp}°C</strong>
             <button

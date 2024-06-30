@@ -1,6 +1,6 @@
 import Root from '@/pages/Root';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { MockStoreProvider } from '@/test.utils';
+import { MockStoreProvider } from '@/utils/testUtils';
 import weather from '@/__MOCKS__/weather';
 import { getWeatherCurrentLocation } from '@/services/weatherApi';
 import { RootState } from '@/domain/store/store.types';
