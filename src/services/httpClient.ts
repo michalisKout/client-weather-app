@@ -1,4 +1,5 @@
-import axios from 'axios';
+import { handleApiErrorMessage } from '@/utils/errorHandling';
+import axios, { AxiosError } from 'axios';
 
 const API_VERSION = 'v1';
 const DEFAULT_URL = `http://api.weatherapi.com/`;
@@ -15,6 +16,24 @@ const axiosInstance = axios.create({
   },
 });
 
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error: AxiosError<ApiErrorResponse>) => {
+    console.log({ error });
+    return Promise.reject({
+      errCode: error.code,
+      error: {
+        code: error.response?.data.error.code,
+        message: handleApiErrorMessage(error),
+      },
+    });
+  },
+);
+
 export default axiosInstance;
 
 export type ApiErrorResponse = { error: { code: number; message: string } };
+
+export type ClientError = ApiErrorResponse & { errCode: string };

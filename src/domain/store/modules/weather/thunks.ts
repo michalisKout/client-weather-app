@@ -3,7 +3,6 @@ import { WeatherData } from '@/domain/models/weather';
 import { getWeatherCurrentLocation } from '@/services/weatherApi';
 import { WeatherApiParams } from '@/services/weatherApi.types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosError } from 'axios';
 import { ApiErrorResponse } from '@/services/httpClient';
 
 export const getWeatherCurrentLocationAsync = createAsyncThunk<WeatherData, WeatherApiParams>(
@@ -13,10 +12,9 @@ export const getWeatherCurrentLocationAsync = createAsyncThunk<WeatherData, Weat
       const data = await getWeatherCurrentLocation({ city });
       return data;
     } catch (err) {
-      const error = err as AxiosError<ApiErrorResponse>;
-      const message = error.response?.data.error.message;
+      const error = err as ApiErrorResponse & { errCode: string };
 
-      return thunkApi.rejectWithValue(message);
+      return thunkApi.rejectWithValue(error.error.message);
     }
   },
 );
