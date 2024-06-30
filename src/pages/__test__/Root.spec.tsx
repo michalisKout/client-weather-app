@@ -93,4 +93,81 @@ describe('Root', () => {
     await screen.findByText('Recent cities search history');
     expect(screen.getByRole('listitem')).toHaveTextContent('Athens');
   });
+
+  it('should save favorite city', async () => {
+    mockGetWeatherCurrentLocation.mockReturnValue(Promise.resolve(weather));
+
+    render(
+      <MockStoreProvider preloadState={initState}>
+        <Root />
+      </MockStoreProvider>,
+    );
+
+    expect(screen.getByText('Your favorite cities list is empty!')).toBeInTheDocument();
+
+    expect(screen.getByText('Start adding cities by pressing ❤ button.')).toBeInTheDocument();
+
+    expect(screen.queryByTestId('fav-city-Athens-0')).not.toBeInTheDocument();
+    // user selects favorite city
+    const favBtn = await screen.findByTestId('favorite-city-button');
+
+    expect(screen.getByTestId('heart-empty')).toBeInTheDocument();
+    expect(screen.queryByTestId('heart-filled')).not.toBeInTheDocument();
+
+    fireEvent.click(favBtn);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('heart-filled')).toBeInTheDocument();
+    });
+
+    expect(screen.queryByTestId('heart-empty')).not.toBeInTheDocument();
+
+    // user sees the selected city in favorite list
+
+    expect(screen.queryByTestId('Your favorite cities list is empty!')).not.toBeInTheDocument();
+
+    expect(
+      screen.queryByTestId('Start adding cities by pressing ❤ button.'),
+    ).not.toBeInTheDocument();
+
+    expect(screen.getByTestId('fav-city-Athens-0')).toBeInTheDocument();
+  });
+
+  it('should remove favorite city', async () => {
+    mockGetWeatherCurrentLocation.mockReturnValue(Promise.resolve(weather));
+
+    render(
+      <MockStoreProvider preloadState={initState}>
+        <Root />
+      </MockStoreProvider>,
+    );
+
+    // user selects favorite city
+    const favBtn = await screen.findByTestId('favorite-city-button');
+
+    expect(screen.getByTestId('heart-empty')).toBeInTheDocument();
+    expect(screen.queryByTestId('heart-filled')).not.toBeInTheDocument();
+
+    fireEvent.click(favBtn);
+
+    // city is saved in favorite cities list and heart is filled
+    await waitFor(() => {
+      expect(screen.getByTestId('heart-filled')).toBeInTheDocument();
+      expect(screen.queryByTestId('heart-empty')).not.toBeInTheDocument();
+      expect(screen.getByTestId('fav-city-Athens-0')).toBeInTheDocument();
+    });
+
+    // user removes favorite city
+
+    const removeBtn = screen.getByTestId('fav-city-Athens-0-remove');
+
+    fireEvent.click(removeBtn);
+
+    // heart should empty and favorite city is removed from list
+    await waitFor(() => {
+      expect(screen.getByTestId('heart-empty')).toBeInTheDocument();
+      expect(screen.queryByTestId('heart-filled')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('fav-city-Athens-0')).not.toBeInTheDocument();
+    });
+  });
 });

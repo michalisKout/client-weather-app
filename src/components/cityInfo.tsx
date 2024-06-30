@@ -43,17 +43,23 @@ export const CityInfo = () => {
   return (
     <>
       <button
+        data-testid="favorite-city-button"
         className="absolute top-5 right-5"
         onClick={() => {
           if (!favoriteCity) {
             alert('Please select a valid city!');
             return;
           }
+
           if (!cityAlreadyExists) dispatch(addCityToFavoritesList(favoriteCity));
           else dispatch(removeCityFromFavoritesList(favoriteCity.name));
         }}
       >
-        {cityAlreadyExists ? <HeartFilled /> : <HeartEmpty />}
+        {cityAlreadyExists ? (
+          <HeartFilled data-testid="heart-filled" />
+        ) : (
+          <HeartEmpty data-testid="heart-empty" />
+        )}
       </button>
 
       <h2 className="text-4xl font-bold">{locationData?.name.trim()}</h2>

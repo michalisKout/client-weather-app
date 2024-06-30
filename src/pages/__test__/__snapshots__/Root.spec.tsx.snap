@@ -377,8 +377,10 @@ exports[`Root > should match snapshot 1`] = `
             >
               <button
                 class="absolute top-5 right-5"
+                data-testid="favorite-city-button"
               >
                 <svg
+                  data-testid="heart-empty"
                   height="32px"
                   viewBox="0 0 256 256"
                   width="32px"

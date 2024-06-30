@@ -32,7 +32,11 @@ export const FavoriteCities = () => {
       <h2>Favorite cities</h2>
       <ul className="max-h-64 overflow-auto px-6">
         {cities?.map(({ name, temp, img, searchIndex }, index) => (
-          <li key={name + index} className="flex flex-nowrap justify-between gap-2 items-center">
+          <li
+            key={name + index}
+            data-testid={`fav-city-${name}-${index}`}
+            className="flex flex-nowrap justify-between gap-2 items-center"
+          >
             <img src={img} alt={name} />
             <button
               className="text-md font-bold hover:underline whitespace-nowrap text-ellipsis overflow-hidden"
@@ -44,6 +48,7 @@ export const FavoriteCities = () => {
             </button>
             <strong>{temp}°C</strong>
             <button
+              data-testid={`fav-city-${name}-${index}-remove`}
               className="hover:scale-105 active:scale-95 transition-all"
               onClick={() => {
                 dispatch(removeCityFromFavoritesList(name));
