@@ -25,12 +25,12 @@ export const WeatherDetails: FC<Props> = () => {
         <p className="text-md">Feels like {details.feelslike_c} °C</p>
         <img
           src={details.condition.icon}
-          className={`weather--condition weather--condition--${weatherConditionBgClass}`}
+          className={`weather__condition weather__condition__${weatherConditionBgClass}`}
         />
         <p className="text-2xl">{details.condition.text}</p>
       </div>
-      <div className="weather--specs-container">
-        <div className="weather--specs-row">
+      <div className="weather__specs-container">
+        <div className="weather__specs-row">
           <WeatherSpec
             imageSrc={icons.humidity}
             value={`${details?.humidity}%`}
@@ -42,7 +42,7 @@ export const WeatherDetails: FC<Props> = () => {
             description="Wind speed"
           />
         </div>
-        <div className="weather--specs-row">
+        <div className="weather__specs-row">
           <WeatherSpec
             imageSrc={icons.preasure}
             value={`${details?.pressure_mb} mb`}

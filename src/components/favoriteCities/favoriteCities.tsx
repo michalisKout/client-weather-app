@@ -38,7 +38,7 @@ export const FavoriteCities = () => {
   return (
     <>
       <h2>Favorite cities</h2>
-      <ul className="max-h-64 overflow-auto px-6">
+      <ul className="favorite-cities__list">
         {cities?.map((city, index) => (
           <FavoriteCityItem
             key={`${city.name}_${index}`}

@@ -21,7 +21,7 @@ export const SearchCityHistoryList: FC<Props> = ({ searchHistory, onHistoryItemC
 
   return (
     <div className="z-50 w-full max-w-96 absolute top-11 shadow-2xl shadow-slate-950">
-      <ul className="search-history--list">
+      <ul className="search-history__list">
         <div className="flex justify-between p-2">
           <p className="italic">Recent cities search history</p>
           <button className="italic hover:underline text-red-800" onClick={handleClearHistory}>
@@ -34,7 +34,7 @@ export const SearchCityHistoryList: FC<Props> = ({ searchHistory, onHistoryItemC
             <li
               tabIndex={0}
               key={city + index}
-              className="search-history--item"
+              className="search-history__item"
               onClick={() => {
                 onHistoryItemClick?.(city);
               }}

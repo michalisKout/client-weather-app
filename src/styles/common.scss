@@ -3,27 +3,27 @@
 }
 
 .weather {
-	&--condition {
+	&__condition {
 		@apply shadow-2xl shadow-black w-24 h-24 mx-auto my-2 pt-2 rounded-full;
 
-		&--day {
+		&__day {
 			@apply bg-gray-200
 		}
 
-		&--night {
+		&__night {
 			@apply bg-gray-700;
 		}
 	}
 
-	&--specs-container {
+	&__specs-container {
 		@apply flex gap-10 justify-center mt-6;
 	}
 
-	&--specs-row {
+	&__specs-row {
 		@apply my-3;
 	}
 
-	&--spec-item {
+	&__spec-item {
 		@apply flex flex-col gap-3 my-6; 
 	}
 }
@@ -32,26 +32,41 @@
 .search-city-input {
 	@apply w-full max-w-96 p-2 border text-stone-300 bg-slate-900 rounded-md;
 
-	&--default {
+	&__default {
 		@apply outline-stone-300 border-stone-300;
 	}
 
-	&--error {
+	&__error {
 		@apply outline-red-600 border-red-600 focus-visible:outline-red-600 focus-visible:border-red-600;
 
 	}
 }
 
 .search-history {
-	&--list { 
+	&__list { 
 		@apply rounded-lg bg-stone-300 text-slate-800 w-full max-h-64 overflow-auto;
 	}
 
-	&--item { 
+	&__item { 
 		@apply p-2 rounded-lg;
 		&:hover {
 			@apply bg-stone-400 transition-colors cursor-pointer;
 		}
+	}
+}
+
+.favorite-cities {
+
+	&__list {
+		@apply max-h-64 overflow-auto px-6 flex flex-col items-center w-full gap-2;
+	}
+
+	&__item {
+		@apply flex flex-nowrap justify-between gap-2 items-center w-full hover:bg-slate-700 transition-colors hover:rounded-md hover:cursor-pointer;
+	}
+
+	& .remove-favorite-city {
+		@apply font-bold hover:underline whitespace-nowrap text-ellipsis overflow-hidden text-sm;
 	}
 }
 

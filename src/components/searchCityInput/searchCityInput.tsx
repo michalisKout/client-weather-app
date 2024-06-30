@@ -51,7 +51,7 @@ export const SearchCityInput = () => {
           onKeyDown={handleKeyDown}
           onFocus={() => setIsInputFocused(true)}
           placeholder="Search for your preferred city..."
-          className={`search-city-input search-city-input--${error ? 'error' : 'default'}`}
+          className={`search-city-input search-city-input__${error ? 'error' : 'default'}`}
         />
         {isInputFocused && searchHistory.length > 0 && (
           <SearchCityHistoryList

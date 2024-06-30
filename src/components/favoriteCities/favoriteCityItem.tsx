@@ -1,6 +1,6 @@
 import { FavoriteCity } from '@/domain/models/city';
-import { updateCityValue } from '@/domain/store/modules/user';
-import { useAppDispatch } from '@/domain/store/store.types';
+import { selectCityInput, updateCityValue } from '@/domain/store/modules/user';
+import { useAppDispatch, useAppSelector } from '@/domain/store/store.types';
 import { FC } from 'react';
 import DeleteIcon from '@/icons/delete.svg';
 
@@ -11,29 +11,34 @@ type Props = {
 };
 
 export const FavoriteCityItem: FC<Props> = ({ handleCityRemoval, city, index }) => {
+  const searchInput = useAppSelector(selectCityInput);
   const { name, temp, img, searchIndex } = city;
   const dispatch = useAppDispatch();
 
+  const handleCityClick = () => {
+    if (searchIndex) dispatch(updateCityValue(searchIndex));
+  };
+
+  const selectedStyle =
+    searchInput === city.searchIndex ? 'transition-colors bg-slate-800 rounded-md' : '';
+
   return (
     <li
+      onClick={(e) => {
+        e.stopPropagation();
+        handleCityClick();
+      }}
       key={name + index}
       data-testid={`fav-city-${name}-${index}`}
-      className="flex flex-nowrap justify-between gap-2 items-center"
+      className={`favorite-cities__item ${selectedStyle}`}
     >
       <img src={img} alt={name} />
-      <button
-        className="text-md font-bold hover:underline whitespace-nowrap text-ellipsis overflow-hidden"
-        onClick={() => {
-          if (searchIndex) dispatch(updateCityValue(searchIndex));
-        }}
-      >
-        <span>{name}</span>
-      </button>
+      <p>{name}</p>
       <strong>{temp}°C</strong>
       {handleCityRemoval && (
         <button
           data-testid={`fav-city-${name}-${index}-remove`}
-          className="hover:scale-105 active:scale-95 transition-all"
+          className="hover:scale-105 active:scale-95 transition-all mr-4"
           onClick={() => {
             handleCityRemoval(city);
           }}
