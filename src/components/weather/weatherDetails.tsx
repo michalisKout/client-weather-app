@@ -24,6 +24,7 @@ export const WeatherDetails: FC<Props> = () => {
         <h2 className="text-6xl font-bold">{details.temp_c} °C</h2>
         <p className="text-md">Feels like {details.feelslike_c} °C</p>
         <img
+          alt="weather condition"
           src={details.condition.icon}
           className={`weather__condition weather__condition__${weatherConditionBgClass}`}
         />
