@@ -17,6 +17,17 @@ const initState: RootState = {
 };
 
 describe('Root', () => {
+  it('should match loading snapshot', () => {
+    mockGetWeatherCurrentLocation.mockReturnValue(Promise.resolve(weather));
+
+    const { baseElement } = render(
+      <MockStoreProvider preloadState={initState}>
+        <Root />
+      </MockStoreProvider>,
+    );
+
+    expect(baseElement).toMatchSnapshot();
+  });
   it('should match snapshot', async () => {
     mockGetWeatherCurrentLocation.mockReturnValue(Promise.resolve(weather));
 

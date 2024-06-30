@@ -1,3 +1,4 @@
+import { CityInfoLoading } from '@/components/skeletons/skeletons';
 import {
   addCityToFavoritesList,
   removeCityFromFavoritesList,
@@ -29,7 +30,7 @@ export const CityInfo = () => {
 
   if (error) return <p>Missing city details...</p>;
 
-  if (isLoading) return <p>Loading city details...</p>;
+  if (isLoading) return <CityInfoLoading />;
 
   const time = locationData?.localtime && new Date(locationData?.localtime).toLocaleTimeString();
 
