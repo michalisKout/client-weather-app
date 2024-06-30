@@ -4,3 +4,5 @@ export type FavoriteCity = {
   img: string;
   searchIndex?: string;
 };
+
+export type FavoriteCityList = Array<FavoriteCity>;

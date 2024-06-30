@@ -1,6 +1,6 @@
 import { Card } from '@/components/card';
 import { CityInfo } from '@/components/cityInfo';
-import { FavoriteCities } from '@/components/favoriteCities';
+import { FavoriteCities } from '@/components/favoriteCities/favoriteCities';
 import { SearchCityInput } from '@/components/searchCityInput/searchCityInput';
 import { WeatherDetails } from '@/components/weather/weatherDetails';
 import { selectCityInput } from '@/domain/store/modules/user';

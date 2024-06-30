@@ -1,4 +1,4 @@
-import { FavoriteCity } from '@/domain/models/city';
+import { FavoriteCity, FavoriteCityList } from '@/domain/models/city';
 import { createAction } from '@reduxjs/toolkit';
 
 export enum USER_ACTIONS {
@@ -20,7 +20,7 @@ export const addCityToHistory = createAction<string>(USER_ACTIONS.ADD_CITY_VALUE
 export const hydrateCitiesSearchHistory = createAction<Array<string>>(
   USER_ACTIONS.HYDRATE_CITIES_SEARCH_HISTORY,
 );
-export const hydrateFavoriteCities = createAction<Array<FavoriteCity>>(
+export const hydrateFavoriteCities = createAction<FavoriteCityList>(
   USER_ACTIONS.HYDRATE_FAVORITE_CITIES,
 );
 
