@@ -103,7 +103,7 @@ describe('Root', () => {
 
     fireEvent.click(screen.getByText('Search'));
 
-    fireEvent.focus(input);
+    fireEvent.click(input);
 
     await screen.findByText('Recent searched cities');
     expect(screen.getByRole('listitem')).toHaveTextContent('Athens');

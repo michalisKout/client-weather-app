@@ -37,7 +37,7 @@ export const SearchCityInput = () => {
             ref={inputRef}
             value={input}
             onChange={handleChange}
-            onFocus={() => setIsInputFocused(true)}
+            onClick={() => setIsInputFocused(true)}
             placeholder="Search for your preferred city..."
             className={`search-city-input search-city-input__${error ? 'error' : 'default'}`}
           />

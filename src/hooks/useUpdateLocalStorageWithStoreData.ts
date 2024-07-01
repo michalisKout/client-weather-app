@@ -32,7 +32,7 @@ export const useUpdateLocalStorageWithStoreData = () => {
   }, []);
 
   useEffect(() => {
-    if (savedCities.length) setLocalStorageItem(LocalStorageItems.favoriteCities, savedCities);
+    if (savedCities) setLocalStorageItem(LocalStorageItems.favoriteCities, savedCities);
   }, [savedCities]);
 
   useEffect(() => {
