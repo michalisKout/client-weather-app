@@ -48,6 +48,8 @@ export const SearchCityInput = () => {
       >
         <form onSubmit={handleFormSubmit} className="search-city-input__form-container ">
           <input
+            maxLength={30}
+            required
             type="text"
             data-testid="search-city-input"
             ref={inputRef}

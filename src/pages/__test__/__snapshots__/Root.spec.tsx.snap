@@ -18,7 +18,9 @@ exports[`Root > should match loading snapshot 1`] = `
             <input
               class="search-city-input search-city-input__default"
               data-testid="search-city-input"
+              maxlength="30"
               placeholder="Search for your preferred city..."
+              required=""
               type="text"
               value=""
             />
@@ -387,7 +389,9 @@ exports[`Root > should match snapshot 1`] = `
             <input
               class="search-city-input search-city-input__default"
               data-testid="search-city-input"
+              maxlength="30"
               placeholder="Search for your preferred city..."
+              required=""
               type="text"
               value=""
             />
