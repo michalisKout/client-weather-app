@@ -16,7 +16,7 @@ const mockGetFavoriteCitiesWeatherData = vi.mocked(getFavoriteCitiesWeatherData)
 
 const initState: RootState = {
   user: { cityValue: 'Athens', searchHistory: [], favoriteCities: { loading: false, data: [] } },
-  weather: { loading: false },
+  weather: { loading: false, initLoading: false },
 };
 
 describe('Root', () => {

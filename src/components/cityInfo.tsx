@@ -8,7 +8,7 @@ import {
 import {
   selectLocation,
   selectWeatherDataError,
-  selectWeatherDataLoading,
+  selectWeatherDataInitLoading,
   selectWeatherFavoriteCityData,
 } from '@/domain/store/modules/weather';
 import { useAppDispatch, useAppSelector } from '@/domain/store/store.types';
@@ -18,7 +18,7 @@ import { dateOptions, dayOptions, getDate } from '@/utils/dates';
 
 export const CityInfo = () => {
   const locationData = useAppSelector(selectLocation);
-  const isLoading = useAppSelector(selectWeatherDataLoading);
+  const isInitLoading = useAppSelector(selectWeatherDataInitLoading);
   const error = useAppSelector(selectWeatherDataError);
   const favoriteCity = useAppSelector(selectWeatherFavoriteCityData);
   const savedCities = useAppSelector(selectFavoriteCities);
@@ -34,7 +34,7 @@ export const CityInfo = () => {
       />
     );
 
-  if (isLoading) return <CityInfoLoading />;
+  if (isInitLoading) return <CityInfoLoading />;
 
   if (!locationData)
     return (

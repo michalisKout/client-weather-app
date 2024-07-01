@@ -1,14 +1,19 @@
 import { hydrateCitiesSearchHistory } from '@/domain/store/modules/user';
 import { useAppDispatch } from '@/domain/store/store.types';
 import { LocalStorageItems, setLocalStorageItem } from '@/utils/localStorage';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 
 type Props = {
   searchHistory: Array<string>;
   onHistoryItemClick?: (city: string) => void;
+  searchInput: string;
 };
 
-export const SearchCityHistoryList: FC<Props> = ({ searchHistory, onHistoryItemClick }) => {
+export const SearchCityHistoryList: FC<Props> = ({
+  searchHistory,
+  onHistoryItemClick,
+  searchInput,
+}) => {
   const dispatch = useAppDispatch();
 
   const handleClearHistory = () => {
@@ -18,6 +23,16 @@ export const SearchCityHistoryList: FC<Props> = ({ searchHistory, onHistoryItemC
       setLocalStorageItem(LocalStorageItems.citiesSearchHistory, []);
     }
   };
+
+  const searchesExistsInHistory = useMemo(
+    () =>
+      searchHistory.filter((city) =>
+        city.toLocaleLowerCase().includes(searchInput.toLocaleLowerCase()),
+      ),
+    [searchHistory, searchInput],
+  );
+
+  if (!searchesExistsInHistory.length) return null;
 
   return (
     <div className="search-history__container">
@@ -29,7 +44,7 @@ export const SearchCityHistoryList: FC<Props> = ({ searchHistory, onHistoryItemC
           </button>
         </div>
 
-        {searchHistory.map((city, index) => {
+        {searchesExistsInHistory.map((city, index) => {
           return (
             <li
               tabIndex={0}

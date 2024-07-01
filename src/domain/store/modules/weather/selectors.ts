@@ -17,4 +17,6 @@ export const selectDetails = (store: RootState) => store.weather.data?.current;
 
 export const selectWeatherDataLoading = (store: RootState) => store.weather.loading;
 
+export const selectWeatherDataInitLoading = (store: RootState) => store.weather.initLoading;
+
 export const selectWeatherDataError = (store: RootState) => store.weather.error;

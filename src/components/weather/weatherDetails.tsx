@@ -4,7 +4,7 @@ import { WeatherSpec } from '@/components/weather/weatherSpec';
 import {
   selectDetails,
   selectWeatherDataError,
-  selectWeatherDataLoading,
+  selectWeatherDataInitLoading,
 } from '@/domain/store/modules/weather';
 import { useAppSelector } from '@/domain/store/store.types';
 import icons from '@/icons';
@@ -16,7 +16,7 @@ type Props = {
 
 export const WeatherDetails: FC<Props> = () => {
   const details = useAppSelector(selectDetails);
-  const isLoading = useAppSelector(selectWeatherDataLoading);
+  const isInitLoading = useAppSelector(selectWeatherDataInitLoading);
   const error = useAppSelector(selectWeatherDataError);
 
   if (error)
@@ -27,7 +27,7 @@ export const WeatherDetails: FC<Props> = () => {
       />
     );
 
-  if (isLoading) return <WeatherDetailsLoading />;
+  if (isInitLoading) return <WeatherDetailsLoading />;
 
   if (!details)
     return (

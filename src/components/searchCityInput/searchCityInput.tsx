@@ -6,7 +6,7 @@ import {
   selectSearchHistory,
   updateCityValue,
 } from '@/domain/store/modules/user';
-import { selectWeatherDataError } from '@/domain/store/modules/weather';
+import { selectWeatherDataError, selectWeatherDataLoading } from '@/domain/store/modules/weather';
 import { useAppSelector } from '@/domain/store/store.types';
 import { LocalStorageItems, getLocalStorageItem } from '@/utils/localStorage';
 import { useEffect } from 'react';
@@ -23,6 +23,7 @@ export const SearchCityInput = () => {
     dispatch,
   } = useSearchCityInput();
   const error = useAppSelector(selectWeatherDataError);
+  const isLoadingWeatherData = useAppSelector(selectWeatherDataLoading);
   const searchHistory = useAppSelector(selectSearchHistory);
 
   useEffect(() => {
@@ -56,13 +57,18 @@ export const SearchCityInput = () => {
             placeholder="Search for your preferred city..."
             className={`search-city-input search-city-input__${error ? 'error' : 'default'}`}
           />
-          <button className="search-city-input__submit" type="submit">
-            Search
+          <button
+            disabled={isLoadingWeatherData}
+            className="search-city-input__submit"
+            type="submit"
+          >
+            {isLoadingWeatherData ? <SubmitLoading /> : 'Search'}
           </button>
         </form>
 
         {isInputFocused && searchHistory.length > 0 && (
           <SearchCityHistoryList
+            searchInput={input}
             searchHistory={searchHistory}
             onHistoryItemClick={(city) => {
               setInput(city);
@@ -77,3 +83,14 @@ export const SearchCityInput = () => {
     </div>
   );
 };
+
+function SubmitLoading() {
+  return (
+    <div className="grid place-content-center">
+      <div className="flex items-center gap-2 text-gray-500">
+        <span className="h-6 w-6 block rounded-full border-4 border-t-blue-300 animate-spin"></span>
+        loading...
+      </div>
+    </div>
+  );
+}

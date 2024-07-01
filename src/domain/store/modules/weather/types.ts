@@ -4,4 +4,5 @@ export type WeatherState = {
   data?: WeatherData;
   error?: string;
   loading: boolean;
+  initLoading: boolean;
 };
