@@ -2,7 +2,7 @@ import { handleApiErrorMessage } from '@/utils/errorHandling';
 import axios, { AxiosError } from 'axios';
 
 const API_VERSION = 'v1';
-const DEFAULT_URL = `http://api.weatherapi.com/`;
+const DEFAULT_URL = `https://api.weatherapi.com/`;
 
 const createBaseUrl = () => `${import.meta.env.VITE_BASE_URL || DEFAULT_URL}${API_VERSION}/`;
 
