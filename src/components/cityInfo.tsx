@@ -52,6 +52,7 @@ export const CityInfo = () => {
   return (
     <>
       <button
+        aria-label="Favorite button"
         data-testid="favorite-city-button"
         className="favorite-city-button"
         onClick={() => {
