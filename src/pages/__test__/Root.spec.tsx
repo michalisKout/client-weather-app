@@ -19,19 +19,26 @@ const initState: RootState = {
   weather: { loading: false, initLoading: false },
 };
 
+const initLoadingState: RootState = {
+  user: { cityValue: 'Athens', searchHistory: [], favoriteCities: { loading: false, data: [] } },
+  weather: { loading: false, initLoading: true },
+};
+
 describe('Root', () => {
   afterEach(() => {
     localStorage.clear();
   });
 
-  it('should match loading snapshot', () => {
+  it('should match loading snapshot', async () => {
     mockGetWeatherCurrentLocation.mockReturnValue(Promise.resolve(weather));
     mockGetFavoriteCitiesWeatherData.mockReturnValue(Promise.resolve([]));
     const { baseElement } = render(
-      <MockStoreProvider preloadState={initState}>
+      <MockStoreProvider preloadState={initLoadingState}>
         <Root />
       </MockStoreProvider>,
     );
+
+    await screen.findByTestId('weather-details-loading');
 
     expect(baseElement).toMatchSnapshot();
   });
@@ -179,5 +186,55 @@ describe('Root', () => {
       expect(screen.queryByTestId('heart-filled')).not.toBeInTheDocument();
       expect(screen.queryByTestId('fav-city-Athens-0')).not.toBeInTheDocument();
     });
+  });
+});
+
+describe('Root error cases', () => {
+  it('should show data server errors messages', async () => {
+    const { baseElement } = render(
+      <MockStoreProvider
+        preloadState={{
+          user: {
+            cityValue: '',
+            searchHistory: [],
+            favoriteCities: { loading: false, data: [], error: 'favorite cities error!' },
+          },
+          weather: { loading: false, initLoading: false, error: 'weather data error!' },
+        }}
+      >
+        <Root />
+      </MockStoreProvider>,
+    );
+
+    expect(await screen.findByText('favorite cities error!')).toBeInTheDocument();
+
+    expect(screen.getByText('weather data error!')).toBeInTheDocument();
+    expect(screen.getByText('Cannot display weather data due to an error.')).toBeInTheDocument();
+    expect(screen.getByText('Cannot display location data due to an error.')).toBeInTheDocument();
+
+    expect(baseElement).toMatchSnapshot();
+  });
+
+  it('should show data missing error messages', async () => {
+    const { baseElement } = render(
+      <MockStoreProvider
+        preloadState={{
+          user: {
+            cityValue: '',
+            searchHistory: [],
+            favoriteCities: { loading: false, data: [] },
+          },
+          weather: { loading: false, initLoading: false, data: undefined },
+        }}
+      >
+        <Root />
+      </MockStoreProvider>,
+    );
+
+    expect(await screen.findByText('The weather details will be shown here.')).toBeInTheDocument();
+
+    expect(screen.getByText('The location details will be shown here.')).toBeInTheDocument();
+
+    expect(baseElement).toMatchSnapshot();
   });
 });

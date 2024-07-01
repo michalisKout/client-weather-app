@@ -13,7 +13,7 @@ export const WeatherSpecLoading = () => (
 
 export const WeatherDetailsLoading = () => (
   <>
-    <div className="flex-col-centered">
+    <div className="flex-col-centered" data-testid="weather-details-loading">
       <Skeleton width={180} height={40} highlightColor={highlightColor} />
       <Skeleton highlightColor={highlightColor} width={90} height={20} />
       <Skeleton highlightColor={highlightColor} circle width={100} height={100} />
