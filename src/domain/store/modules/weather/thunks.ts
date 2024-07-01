@@ -9,8 +9,7 @@ export const getWeatherCurrentLocationAsync = createAsyncThunk<WeatherData, Weat
   WEATHER_DATA_ACTIONS.GET_CURRENT_LOCATION,
   async ({ city }, thunkApi) => {
     try {
-      const data = await getWeatherCurrentLocation({ city });
-      return data;
+      return await getWeatherCurrentLocation({ city });
     } catch (err) {
       const error = err as ApiErrorResponse & { errCode: string };
 

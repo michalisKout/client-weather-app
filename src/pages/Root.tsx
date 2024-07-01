@@ -22,9 +22,6 @@ function Root() {
 
   return (
     <>
-      <header className="w-full text-center">
-        <h1 className="font-bold text-3xl md:text-6xl mb-6">Weather app</h1>
-      </header>
       <main className="flex flex-col gap-4 items-center">
         <SearchCityInput />
 

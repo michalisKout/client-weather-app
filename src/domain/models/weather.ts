@@ -51,3 +51,19 @@ export interface WeatherData {
   location: Location;
   current: Current;
 }
+
+export interface LocationParam {
+  q: string;
+  custom_id?: string;
+}
+
+export interface LocationParams {
+  locations: Array<{
+    q?: string;
+    custom_id?: string;
+  }>;
+}
+
+export interface BulkWeatherData {
+  bulk: Array<{ query: WeatherData & LocationParam }>;
+}

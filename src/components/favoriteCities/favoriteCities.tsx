@@ -1,23 +1,22 @@
+import { FallbackContent } from '@/components/fallbackContent';
 import { FavoriteCityItem } from '@/components/favoriteCities/favoriteCityItem';
+import { FavoriteCitiesLoading } from '@/components/skeletons/skeletons';
 import { FavoriteCity, FavoriteCityList } from '@/domain/models/city';
 import {
   selectFavoriteCities,
-  hydrateFavoriteCities,
   removeCityFromFavoritesList,
+  selectFavoriteCitiesLoading,
+  selectFavoriteCitiesError,
 } from '@/domain/store/modules/user';
 import { useAppSelector, useAppDispatch } from '@/domain/store/store.types';
 import { getLocalStorageItem, LocalStorageItems, setLocalStorageItem } from '@/utils/localStorage';
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 
 export const FavoriteCities = () => {
   const cities = useAppSelector(selectFavoriteCities);
+  const isLoading = useAppSelector(selectFavoriteCitiesLoading);
+  const error = useAppSelector(selectFavoriteCitiesError);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const favoriteCities = getLocalStorageItem<FavoriteCityList>(LocalStorageItems.favoriteCities);
-
-    if (favoriteCities) dispatch(hydrateFavoriteCities(favoriteCities));
-  }, []);
 
   const handleCityRemove = useCallback(
     ({ name }: FavoriteCity) => {
@@ -32,6 +31,10 @@ export const FavoriteCities = () => {
     },
     [dispatch],
   );
+
+  if (isLoading) return <FavoriteCitiesLoading />;
+
+  if (error) return <FallbackContent text={error} imgSrc="./server-error.svg" />;
 
   if (!cities?.length) return <FavoriteCitiesFallback />;
 

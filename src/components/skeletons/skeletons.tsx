@@ -39,3 +39,11 @@ export const CityInfoLoading = () => (
     <Skeleton width={150} highlightColor={highlightColor} />
   </div>
 );
+
+export const FavoriteCitiesLoading = () => (
+  <div className="flex flex-col gap-2 items-center">
+    <Skeleton height={30} className="mb-2" width={80} highlightColor={highlightColor} />
+    <Skeleton height={50} className="mb-2" width={150} highlightColor={highlightColor} />
+    <Skeleton height={50} className="mb-2" width={150} highlightColor={highlightColor} />
+  </div>
+);

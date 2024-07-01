@@ -3,15 +3,6 @@
 exports[`Root > should match loading snapshot 1`] = `
 <body>
   <div>
-    <header
-      class="w-full text-center"
-    >
-      <h1
-        class="font-bold text-3xl md:text-6xl mb-6"
-      >
-        Weather app
-      </h1>
-    </header>
     <main
       class="flex flex-col gap-4 items-center"
     >
@@ -369,15 +360,6 @@ exports[`Root > should match loading snapshot 1`] = `
 exports[`Root > should match snapshot 1`] = `
 <body>
   <div>
-    <header
-      class="w-full text-center"
-    >
-      <h1
-        class="font-bold text-3xl md:text-6xl mb-6"
-      >
-        Weather app
-      </h1>
-    </header>
     <main
       class="flex flex-col gap-4 items-center"
     >

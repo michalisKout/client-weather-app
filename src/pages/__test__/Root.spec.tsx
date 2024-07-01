@@ -2,17 +2,20 @@ import Root from '@/pages/Root';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MockStoreProvider } from '@/utils/testUtils';
 import weather from '@/__MOCKS__/weather';
-import { getWeatherCurrentLocation } from '@/services/weatherApi';
+import { getFavoriteCitiesWeatherData, getWeatherCurrentLocation } from '@/services/weatherApi';
 import { RootState } from '@/domain/store/store.types';
 
 vi.mock('@/services/weatherApi', () => ({
   getWeatherCurrentLocation: vi.fn(),
+  getFavoriteCitiesWeatherData: vi.fn(),
 }));
 
 const mockGetWeatherCurrentLocation = vi.mocked(getWeatherCurrentLocation);
 
+const mockGetFavoriteCitiesWeatherData = vi.mocked(getFavoriteCitiesWeatherData);
+
 const initState: RootState = {
-  user: { cityValue: 'Athens', searchHistory: [], favoriteCities: [] },
+  user: { cityValue: 'Athens', searchHistory: [], favoriteCities: { loading: false, data: [] } },
   weather: { loading: false },
 };
 
@@ -23,7 +26,7 @@ describe('Root', () => {
 
   it('should match loading snapshot', () => {
     mockGetWeatherCurrentLocation.mockReturnValue(Promise.resolve(weather));
-
+    mockGetFavoriteCitiesWeatherData.mockReturnValue(Promise.resolve([]));
     const { baseElement } = render(
       <MockStoreProvider preloadState={initState}>
         <Root />
@@ -34,6 +37,7 @@ describe('Root', () => {
   });
   it('should match snapshot', async () => {
     mockGetWeatherCurrentLocation.mockReturnValue(Promise.resolve(weather));
+    mockGetFavoriteCitiesWeatherData.mockReturnValue(Promise.resolve([]));
 
     const { baseElement } = render(
       <MockStoreProvider preloadState={initState}>
@@ -49,6 +53,7 @@ describe('Root', () => {
 
   it('should display weather data for the provided city', async () => {
     mockGetWeatherCurrentLocation.mockReturnValue(Promise.resolve(weather));
+    mockGetFavoriteCitiesWeatherData.mockReturnValue(Promise.resolve([]));
 
     render(
       <MockStoreProvider preloadState={initState}>
@@ -73,6 +78,7 @@ describe('Root', () => {
 
   it('should display search history', async () => {
     mockGetWeatherCurrentLocation.mockReturnValue(Promise.resolve(weather));
+    mockGetFavoriteCitiesWeatherData.mockReturnValue(Promise.resolve([]));
 
     render(
       <MockStoreProvider preloadState={initState}>
@@ -98,6 +104,7 @@ describe('Root', () => {
 
   it('should save favorite city', async () => {
     mockGetWeatherCurrentLocation.mockReturnValue(Promise.resolve(weather));
+    mockGetFavoriteCitiesWeatherData.mockReturnValue(Promise.resolve([]));
 
     render(
       <MockStoreProvider preloadState={initState}>
@@ -137,6 +144,7 @@ describe('Root', () => {
 
   it('should remove favorite city', async () => {
     mockGetWeatherCurrentLocation.mockReturnValue(Promise.resolve(weather));
+    mockGetFavoriteCitiesWeatherData.mockReturnValue(Promise.resolve([]));
 
     render(
       <MockStoreProvider preloadState={initState}>

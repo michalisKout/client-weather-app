@@ -2,16 +2,19 @@ import {
   addCityToFavoritesList,
   addCityToHistory,
   hydrateCitiesSearchHistory,
-  hydrateFavoriteCities,
   removeCityFromFavoritesList,
   updateCityValue,
 } from '@/domain/store/modules/user/actions';
+import { getFavoriteCitiesWeatherDataAsync } from '@/domain/store/modules/user/thunks';
 import { UserState } from '@/domain/store/modules/user/types';
 import { createReducer } from '@reduxjs/toolkit';
 
 const INITIAL_STATE: UserState = {
   searchHistory: [],
-  favoriteCities: [],
+  favoriteCities: {
+    loading: false,
+    data: [],
+  },
 };
 
 export const userReducer = createReducer(INITIAL_STATE, (builder) => {
@@ -26,15 +29,29 @@ export const userReducer = createReducer(INITIAL_STATE, (builder) => {
       state.searchHistory = action.payload;
     })
     .addCase(addCityToFavoritesList, (state, action) => {
-      state.favoriteCities.unshift(action.payload);
-    })
-    .addCase(hydrateFavoriteCities, (state, action) => {
-      state.favoriteCities = action.payload;
+      state.favoriteCities.data.unshift(action.payload);
     })
     .addCase(removeCityFromFavoritesList, (state, action) => {
-      const updatedCities = state.favoriteCities.filter((data) => data.name !== action.payload);
+      const updatedCities = state.favoriteCities.data.filter(
+        (data) => data.name !== action.payload,
+      );
 
-      state.favoriteCities = updatedCities;
+      state.favoriteCities.data = updatedCities;
+    })
+    .addCase(getFavoriteCitiesWeatherDataAsync.pending, (state) => {
+      state.favoriteCities.data = [];
+      state.favoriteCities.loading = true;
+      state.favoriteCities.error = undefined;
+    })
+    .addCase(getFavoriteCitiesWeatherDataAsync.fulfilled, (state, action) => {
+      state.favoriteCities.data = action.payload;
+      state.favoriteCities.loading = false;
+      state.favoriteCities.error = undefined;
+    })
+    .addCase(getFavoriteCitiesWeatherDataAsync.rejected, (state, action) => {
+      state.favoriteCities.data = [];
+      state.favoriteCities.loading = false;
+      if (action.payload) state.favoriteCities.error = action.payload as string;
     })
     .addDefaultCase((state) => state);
 });
