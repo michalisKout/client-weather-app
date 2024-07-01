@@ -17,6 +17,10 @@ const initState: RootState = {
 };
 
 describe('Root', () => {
+  afterEach(() => {
+    localStorage.clear();
+  });
+
   it('should match loading snapshot', () => {
     mockGetWeatherCurrentLocation.mockReturnValue(Promise.resolve(weather));
 
@@ -84,13 +88,11 @@ describe('Root', () => {
       expect(screen.getByDisplayValue('Athens')).toBeInTheDocument();
     });
 
-    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', charCode: 13 });
-
-    await screen.getByDisplayValue('Athens');
+    fireEvent.click(screen.getByText('Search'));
 
     fireEvent.focus(input);
 
-    await screen.findByText('Recent cities search history');
+    await screen.findByText('Recent searched cities');
     expect(screen.getByRole('listitem')).toHaveTextContent('Athens');
   });
 

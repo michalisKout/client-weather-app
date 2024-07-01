@@ -1,7 +1,11 @@
 import { FallbackContent } from '@/components/fallbackContent';
 import { WeatherDetailsLoading } from '@/components/skeletons/skeletons';
 import { WeatherSpec } from '@/components/weather/weatherSpec';
-import { selectDetails, selectWeatherDataLoading } from '@/domain/store/modules/weather';
+import {
+  selectDetails,
+  selectWeatherDataError,
+  selectWeatherDataLoading,
+} from '@/domain/store/modules/weather';
 import { useAppSelector } from '@/domain/store/store.types';
 import icons from '@/icons';
 import { FC } from 'react';
@@ -13,6 +17,12 @@ type Props = {
 export const WeatherDetails: FC<Props> = () => {
   const details = useAppSelector(selectDetails);
   const isLoading = useAppSelector(selectWeatherDataLoading);
+  const error = useAppSelector(selectWeatherDataError);
+
+  if (error)
+    return (
+      <FallbackContent text="Cannot display data due to an error." imgSrc="./server-error.svg" />
+    );
 
   if (isLoading) return <WeatherDetailsLoading />;
 

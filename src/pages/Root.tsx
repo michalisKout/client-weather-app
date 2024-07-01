@@ -21,35 +21,46 @@ function Root() {
   }, [city, dispatch]);
 
   return (
-    <div className="flex flex-col gap-4 items-center">
-      <SearchCityInput />
+    <>
+      <header className="w-full text-center">
+        <h1 className="font-bold text-3xl md:text-6xl mb-6">Weather app</h1>
+      </header>
+      <main className="flex flex-col gap-4 items-center">
+        <SearchCityInput />
 
-      <div className="flex w-full justify-center" style={{ maxWidth: 800 }}>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="flex-col-centered gap-4">
-            <Card>
-              <CityInfo />
-            </Card>
-            <div className="hidden md:block">
+        <div className="flex w-full justify-center" style={{ maxWidth: 800 }}>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="flex-col-centered gap-4">
+              <Card>
+                <CityInfo />
+              </Card>
+
               <Card>
                 <FavoriteCities />
               </Card>
             </div>
-          </div>
-          <div className="flex-col-centered w-full h-full">
-            <Card>
-              <WeatherDetails />
-            </Card>
-
-            <div className="md:hidden block">
+            <div className="flex-col-centered w-full h-full">
               <Card>
-                <FavoriteCities />
+                <WeatherDetails />
               </Card>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </main>
+      <footer className="w-full text-center mt-6">
+        <p className="font-bold text-lg italic">
+          Created by{' '}
+          <a
+            className="text-slate-500 hover:underline"
+            href="https://mikek.gr"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Michael Koutridis
+          </a>
+        </p>
+      </footer>
+    </>
   );
 }
 

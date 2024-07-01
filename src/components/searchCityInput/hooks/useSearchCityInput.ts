@@ -4,6 +4,7 @@ import {
   updateCityValue,
   addCityToHistory,
 } from '@/domain/store/modules/user';
+
 import { useAppDispatch, useAppSelector } from '@/domain/store/store.types';
 import { useRef, useState, useCallback, ChangeEvent, FormEvent } from 'react';
 

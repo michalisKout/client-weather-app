@@ -1,6 +1,6 @@
 import { selectFavoriteCities, selectSearchHistory } from '@/domain/store/modules/user';
 import { useAppSelector } from '@/domain/store/store.types';
-import { LocalStorageItems, setLocalStorageItem, getLocalStorageItem } from '@/utils/localStorage';
+import { LocalStorageItems, setLocalStorageItem } from '@/utils/localStorage';
 import { useEffect } from 'react';
 
 export const useUpdateLocalStorageWithStoreData = () => {
@@ -15,14 +15,4 @@ export const useUpdateLocalStorageWithStoreData = () => {
     if (searchHistory.length)
       setLocalStorageItem(LocalStorageItems.citiesSearchHistory, searchHistory);
   }, [searchHistory]);
-};
-
-export const useHydrateWithLocalStorageDataOnInit = <D>(
-  itemName: LocalStorageItems,
-  onValidDataRetrieval: (data: D) => void,
-) => {
-  useEffect(() => {
-    const data = getLocalStorageItem<D>(itemName);
-    if (data) onValidDataRetrieval(data);
-  }, []);
 };

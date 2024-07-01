@@ -14,12 +14,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/domain/store/store.types';
 import HeartEmpty from '@/icons/heart-empty.svg';
 import HeartFilled from '@/icons/heart.svg';
-
-const dateOptions: Intl.DateTimeFormatOptions = {
-  weekday: 'long',
-  day: 'numeric',
-  month: 'short',
-};
+import { dateOptions, dayOptions, getDate } from '@/utils/dates';
 
 export const CityInfo = () => {
   const locationData = useAppSelector(selectLocation);
@@ -29,7 +24,12 @@ export const CityInfo = () => {
   const savedCities = useAppSelector(selectFavoriteCities);
   const dispatch = useAppDispatch();
 
-  if (error) return <p>Cannot display data due to an error.</p>;
+  const cityAlreadyExists = !!savedCities.find(({ name }) => name === favoriteCity?.name);
+
+  if (error)
+    return (
+      <FallbackContent text="Cannot display data due to an error." imgSrc="./server-error.svg" />
+    );
 
   if (isLoading) return <CityInfoLoading />;
 
@@ -41,13 +41,18 @@ export const CityInfo = () => {
       />
     );
 
-  const time = locationData?.localtime && new Date(locationData?.localtime).toLocaleTimeString();
+  const day = getDate(locationData.localtime, dayOptions);
+  const date = getDate(locationData.localtime, dateOptions);
 
-  const date =
-    locationData?.localtime &&
-    new Date(locationData?.localtime).toLocaleDateString('en-US', dateOptions);
+  const handleFavoriteCity = () => {
+    if (!favoriteCity) {
+      alert('Please select a valid city!');
+      return;
+    }
 
-  const cityAlreadyExists = !!savedCities.find(({ name }) => name === favoriteCity?.name);
+    if (!cityAlreadyExists) dispatch(addCityToFavoritesList(favoriteCity));
+    else dispatch(removeCityFromFavoritesList(favoriteCity.name));
+  };
 
   return (
     <>
@@ -55,15 +60,7 @@ export const CityInfo = () => {
         aria-label="Favorite button"
         data-testid="favorite-city-button"
         className="favorite-city-button"
-        onClick={() => {
-          if (!favoriteCity) {
-            alert('Please select a valid city!');
-            return;
-          }
-
-          if (!cityAlreadyExists) dispatch(addCityToFavoritesList(favoriteCity));
-          else dispatch(removeCityFromFavoritesList(favoriteCity.name));
-        }}
+        onClick={handleFavoriteCity}
       >
         {cityAlreadyExists ? (
           <HeartFilled data-testid="heart-filled" />
@@ -72,9 +69,9 @@ export const CityInfo = () => {
         )}
       </button>
 
-      <h2 className="text-4xl font-bold">{locationData?.name.trim()}</h2>
-      <p className="text-2xl italic">{time}</p>
-      <p className="text-lg italic">{date}</p>
+      <h2 className="text-4xl font-bold mb-6">{locationData?.name.trim()}</h2>
+      {day && <p className="text-2xl italic">{day}</p>}
+      {date && <p className="text-lg italic">{date}</p>}
     </>
   );
 };
