@@ -28,7 +28,10 @@ export const CityInfo = () => {
 
   if (error)
     return (
-      <FallbackContent text="Cannot display data due to an error." imgSrc="./server-error.svg" />
+      <FallbackContent
+        text="Cannot display location data due to an error."
+        imgSrc="./server-error.svg"
+      />
     );
 
   if (isLoading) return <CityInfoLoading />;

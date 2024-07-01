@@ -21,7 +21,10 @@ export const WeatherDetails: FC<Props> = () => {
 
   if (error)
     return (
-      <FallbackContent text="Cannot display data due to an error." imgSrc="./server-error.svg" />
+      <FallbackContent
+        text="Cannot display weather data due to an error."
+        imgSrc="./server-error.svg"
+      />
     );
 
   if (isLoading) return <WeatherDetailsLoading />;

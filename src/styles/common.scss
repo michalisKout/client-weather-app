@@ -40,7 +40,7 @@
 	}
 
 	&__error {
-		@apply outline-red-600 border-red-600 focus-visible:outline-red-600 focus-visible:border-red-600;
+		@apply outline-red-600 border-red-600 border-2 focus:ring-4 focus:ring-red-600 focus-visible:outline-red-600 focus-visible:border-red-600;
 
 	}
 
@@ -74,7 +74,7 @@
 	}
 
 	&__item {
-		@apply flex flex-nowrap justify-between gap-2 items-center w-full hover:bg-slate-700 transition-colors rounded-md hover:rounded-md hover:cursor-pointer;
+		@apply flex flex-nowrap justify-between gap-2 items-center w-full hover:bg-slate-700 transition-all rounded-md hover:rounded-md hover:cursor-pointer active:scale-95;
 	}
 
 	& .remove-favorite-city {

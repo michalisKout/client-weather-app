@@ -23,7 +23,11 @@ export const userReducer = createReducer(INITIAL_STATE, (builder) => {
       state.cityValue = action.payload;
     })
     .addCase(addCityToHistory, (state, action) => {
-      state.searchHistory?.unshift(action.payload);
+      const newHistory = state.searchHistory?.filter(
+        (searchIndex) => searchIndex !== action.payload,
+      );
+
+      state.searchHistory = [action.payload, ...newHistory];
     })
     .addCase(hydrateCitiesSearchHistory, (state, action) => {
       state.searchHistory = action.payload;
