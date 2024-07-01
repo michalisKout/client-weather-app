@@ -1,6 +1,7 @@
 import { useSearchCityInput } from '@/components/searchCityInput/hooks/useSearchCityInput';
 import { SearchCityHistoryList } from '@/components/searchCityInput/searchCityHistoryList';
 import { ClickAwayListener } from '@/components/utils/clickAwayListener';
+import { FavoriteCityList } from '@/domain/models/city';
 import {
   hydrateCitiesSearchHistory,
   selectSearchHistory,
@@ -31,10 +32,17 @@ export const SearchCityInput = () => {
       LocalStorageItems.citiesSearchHistory,
     );
 
+    const lastSavedFavoriteCity = getLocalStorageItem<FavoriteCityList>(
+      LocalStorageItems.favoriteCities,
+    )?.[0];
+
+    if (lastSavedFavoriteCity?.searchIndex) {
+      setInput(lastSavedFavoriteCity.searchIndex);
+      dispatch(updateCityValue(lastSavedFavoriteCity.searchIndex));
+    }
+
     if (savedSearchHistory) {
       dispatch(hydrateCitiesSearchHistory(savedSearchHistory));
-      setInput(savedSearchHistory[0]);
-      dispatch(updateCityValue(savedSearchHistory[0]));
     }
   }, []);
 
@@ -73,7 +81,7 @@ export const SearchCityInput = () => {
             searchInput={input}
             searchHistory={searchHistory}
             onHistoryItemClick={(city) => {
-              setInput(city);
+              if (input) setInput('');
               setIsInputFocused(false);
               dispatch(updateCityValue(city));
             }}

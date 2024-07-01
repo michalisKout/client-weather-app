@@ -1,4 +1,9 @@
-import { selectCityInput, updateCityValue, addCityToHistory } from '@/domain/store/modules/user';
+import {
+  selectCityInput,
+  updateCityValue,
+  addCityToHistory,
+  resetCityValue,
+} from '@/domain/store/modules/user';
 import { resetWeatherDataError } from '@/domain/store/modules/weather';
 
 import { useAppDispatch, useAppSelector } from '@/domain/store/store.types';
@@ -18,6 +23,12 @@ export const useSearchCityInput = () => {
     setInput(e.target.value);
   }, []);
 
+  const resetInput = () => {
+    setInput('');
+    setIsInputFocused(false);
+    dispatch(resetCityValue());
+  };
+
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -27,8 +38,7 @@ export const useSearchCityInput = () => {
     if (input !== existingCitySearchInput) dispatch(updateCityValue(input));
 
     dispatch(addCityToHistory(input));
-
-    setIsInputFocused(false);
+    resetInput();
   };
 
   return {
