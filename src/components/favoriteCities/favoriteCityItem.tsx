@@ -40,7 +40,8 @@ export const FavoriteCityItem: FC<Props> = ({ handleCityRemoval, city, index }) 
           aria-label="Remove favorite button"
           data-testid={`fav-city-${name}-${index}-remove`}
           className="hover:scale-105 active:scale-95 transition-all mr-4"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             handleCityRemoval(city);
           }}
         >
