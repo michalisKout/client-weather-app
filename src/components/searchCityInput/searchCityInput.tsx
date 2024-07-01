@@ -1,16 +1,9 @@
 import { useSearchCityInput } from '@/components/searchCityInput/hooks/useSearchCityInput';
 import { SearchCityHistoryList } from '@/components/searchCityInput/searchCityHistoryList';
 import { ClickAwayListener } from '@/components/utils/clickAwayListener';
-import { FavoriteCityList } from '@/domain/models/city';
-import {
-  hydrateCitiesSearchHistory,
-  selectSearchHistory,
-  updateCityValue,
-} from '@/domain/store/modules/user';
+import { selectSearchHistory, updateCityValue } from '@/domain/store/modules/user';
 import { selectWeatherDataError, selectWeatherDataLoading } from '@/domain/store/modules/weather';
 import { useAppSelector } from '@/domain/store/store.types';
-import { LocalStorageItems, getLocalStorageItem } from '@/utils/localStorage';
-import { useEffect } from 'react';
 
 export const SearchCityInput = () => {
   const {
@@ -26,25 +19,6 @@ export const SearchCityInput = () => {
   const error = useAppSelector(selectWeatherDataError);
   const isLoadingWeatherData = useAppSelector(selectWeatherDataLoading);
   const searchHistory = useAppSelector(selectSearchHistory);
-
-  useEffect(() => {
-    const savedSearchHistory = getLocalStorageItem<Array<string>>(
-      LocalStorageItems.citiesSearchHistory,
-    );
-
-    const lastSavedFavoriteCity = getLocalStorageItem<FavoriteCityList>(
-      LocalStorageItems.favoriteCities,
-    )?.[0];
-
-    if (lastSavedFavoriteCity?.searchIndex) {
-      setInput(lastSavedFavoriteCity.searchIndex);
-      dispatch(updateCityValue(lastSavedFavoriteCity.searchIndex));
-    }
-
-    if (savedSearchHistory) {
-      dispatch(hydrateCitiesSearchHistory(savedSearchHistory));
-    }
-  }, []);
 
   return (
     <div className="flex flex-col gap-2 w-full items-center relative">
