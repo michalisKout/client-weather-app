@@ -1,6 +1,5 @@
 import { hydrateCitiesSearchHistory } from '@/domain/store/modules/user';
 import { useAppDispatch } from '@/domain/store/store.types';
-import { LocalStorageItems, setLocalStorageItem } from '@/utils/localStorage';
 import { FC, useMemo } from 'react';
 
 type Props = {
@@ -20,7 +19,6 @@ export const SearchCityHistoryList: FC<Props> = ({
     const yes = confirm('Are you sure you want to clear your search history?');
     if (yes) {
       dispatch(hydrateCitiesSearchHistory([]));
-      setLocalStorageItem(LocalStorageItems.citiesSearchHistory, []);
     }
   };
 

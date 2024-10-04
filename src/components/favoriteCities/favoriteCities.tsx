@@ -1,7 +1,7 @@
 import { FallbackContent } from '@/components/fallbackContent';
 import { FavoriteCityItem } from '@/components/favoriteCities/favoriteCityItem';
 import { FavoriteCitiesLoading } from '@/components/skeletons/skeletons';
-import { FavoriteCity, FavoriteCityList } from '@/domain/models/city';
+import { FavoriteCity } from '@/domain/models/city';
 import {
   selectFavoriteCities,
   removeCityFromFavoritesList,
@@ -9,7 +9,6 @@ import {
   selectFavoriteCitiesError,
 } from '@/domain/store/modules/user';
 import { useAppSelector, useAppDispatch } from '@/domain/store/store.types';
-import { getLocalStorageItem, LocalStorageItems, setLocalStorageItem } from '@/utils/localStorage';
 import { useCallback } from 'react';
 
 export const FavoriteCities = () => {
@@ -21,13 +20,6 @@ export const FavoriteCities = () => {
   const handleCityRemove = useCallback(
     ({ name }: FavoriteCity) => {
       dispatch(removeCityFromFavoritesList(name));
-
-      const favoriteCities = getLocalStorageItem<FavoriteCityList>(
-        LocalStorageItems.favoriteCities,
-      );
-      const updatedCities = favoriteCities?.filter((city) => city.name !== name);
-
-      setLocalStorageItem(LocalStorageItems.favoriteCities, updatedCities || [].toString());
     },
     [dispatch],
   );

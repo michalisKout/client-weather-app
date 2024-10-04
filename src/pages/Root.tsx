@@ -6,15 +6,12 @@ import { WeatherDetails } from '@/components/weather/weatherDetails';
 import { selectCityInput } from '@/domain/store/modules/user';
 import { getWeatherCurrentLocationAsync } from '@/domain/store/modules/weather';
 import { AppDispatch, useAppSelector } from '@/domain/store/store.types';
-import { useUpdateLocalStorageWithStoreData } from '@/hooks/useUpdateLocalStorageWithStoreData';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 function Root() {
   const dispatch = useDispatch<AppDispatch>();
   const city = useAppSelector(selectCityInput);
-
-  useUpdateLocalStorageWithStoreData();
 
   useEffect(() => {
     if (city) dispatch(getWeatherCurrentLocationAsync({ city }));

@@ -1,9 +1,7 @@
 # Project Documentation
 
 
-## PCCW Weather app project
-Senior Frontend Engineer Technical Assessment
-
+## Weather app project
 
 Production status: [![Netlify Status](https://api.netlify.com/api/v1/badges/258deb66-88de-47dc-b283-ce6ebf9ba25c/deploy-status)](https://app.netlify.com/sites/weather-app-pccw/deploys)
 
